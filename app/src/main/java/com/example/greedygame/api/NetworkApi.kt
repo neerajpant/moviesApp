@@ -27,4 +27,7 @@ interface NetworkApi {
     suspend  fun getReviewDetail(
         @Path("movie_id") movie: Int?
     ):ReviewsData
+    @GET("3/discover/movie")
+    suspend  fun getMoviePagerValue(
+        @Query("page") page: Int?):MovieResponseData
 }

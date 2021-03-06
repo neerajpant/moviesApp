@@ -34,25 +34,27 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.greedygame.model.Movie
+import com.example.greedygame.model.MovieResponse
+import com.example.greedygame.model.MovieResponseData
 
 
 private const val MAX_VALUE = 200
 
-// 1
-class MoviesPagerAdapter(fragmentManager: FragmentManager, private val movies: ArrayList<Movie>) :
-    FragmentStatePagerAdapter(fragmentManager) {
 
-  // 2
+class MoviesPagerAdapter(fragmentManager: FragmentManager, private val movies: List<MovieResponse>?) :
+  FragmentStatePagerAdapter(fragmentManager) {
+
+
   override fun getItem(position: Int): Fragment {
-    return MovieFragment.newInstance(movies[position % movies.size])
+    return MovieFragment.newInstance(movies?.get(position)!!)
   }
 
-  // 3
+
   override fun getCount(): Int {
-    return movies.size * MAX_VALUE
+    return movies!!.size
   }
 
   override fun getPageTitle(position: Int): CharSequence {
-    return movies[position % movies.size].title!!
+    return movies?.get(position)?.title!!
   }
 }

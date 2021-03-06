@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greedygame.R
 import com.example.greedygame.databinding.LayoutMovieListBinding
-import com.example.greedygame.databinding.LayoutMoviesBinding
-import com.example.greedygame.databinding.LayoutMoviesListBinding
-import com.example.greedygame.model.Movie
 import com.example.greedygame.model.MovieResponse
+import com.example.greedygame.model.MovieResponseData
 import com.example.greedygame.model.Status
 import com.example.greedygame.paging.MoviesPagingAdapter
 import com.example.greedygame.ui.movDetail.MoviesDetailsFragment
@@ -41,7 +40,8 @@ class MoviesFragment : Fragment(),
     private var _binding: LayoutMovieListBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: MoviesPagingAdapter
-    private lateinit var pagerAdapter: MoviesPagerAdapter
+    private lateinit var viewPagerAdapter: MoviesPagerAdapter
+    private lateinit var pagingDataViewPager: PagingData<MovieResponse>
     private lateinit var responseTweet: List<MovieResponse>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +62,8 @@ class MoviesFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = LayoutMovieListBinding.bind(view)
+
+        viewModel.getMoviesViewPager()
         setUpViewPager()
         val adapter = MoviesPagingAdapter(this)
         binding.apply {
@@ -73,15 +75,48 @@ class MoviesFragment : Fragment(),
         }
         viewModel.moviesData.observe(viewLifecycleOwner, Observer {
 
-            adapter.submitData(lifecycle,it)
+            adapter.submitData(lifecycle, it)
         })
 
     }
 
+
     private fun setUpViewPager() {
-        //viewModel.moviesData
-       // pagerAdapter=MoviesPagerAdapter(requireFragmentManager(), emptyList<Movie>())
-       //binding.viewPager2.adapter=Pa
+
+        viewModel.movieViewPagerDetails.observe(viewLifecycleOwner, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+
+                        println("setUpViewPager::Success Call  ${it.data}")
+                        setUpViewPagerData(it.data)
+
+                        binding.progressBar.visibility = View.GONE
+                        binding.movieList.visibility = View.VISIBLE
+                    }
+                    Status.ERROR -> {
+                        println("MovieDetailsFragment ${it.message}")
+
+                        binding.progressBar.visibility = View.GONE
+
+
+                    }
+                    Status.LOADING -> {
+
+                          binding.progressBar.visibility = View.VISIBLE
+                         binding.movieList.visibility = View.GONE
+                    }
+                }
+            }
+        })
+
+    }
+
+    private fun setUpViewPagerData(data: MovieResponseData?) {
+        val response=data?.movieResponse?.take(3)
+        viewPagerAdapter=MoviesPagerAdapter(requireFragmentManager(), response)
+        _binding?.viewPager2?.adapter=viewPagerAdapter
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -90,10 +125,10 @@ class MoviesFragment : Fragment(),
     }
 
     private fun setUpObserver() {
-      /*  viewModel.moviesData.observe(viewLifecycleOwner, Observer {
+        /*  viewModel.moviesData.observe(viewLifecycleOwner, Observer {
 
-            adapter.submitData(lifecycle,it)
-        })*/
+              adapter.submitData(lifecycle,it)
+          })*/
         /*viewModel.moviesData.observe(viewLifecycleOwner, Observer {
             println("observerCalled")
             it?.let { resource ->
@@ -151,10 +186,10 @@ class MoviesFragment : Fragment(),
     override fun onItemClick(movieDetail: MovieResponse) {
 
         val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
-        val bundle =Bundle()
-        bundle.putParcelable("moviesDetails",movieDetail)
-        val fragment=MoviesDetailsFragment()
-        fragment.arguments=bundle
+        val bundle = Bundle()
+        bundle.putParcelable("moviesDetails", movieDetail)
+        val fragment = MoviesDetailsFragment()
+        fragment.arguments = bundle
         ft.replace(R.id.frame, fragment, "MovieDetail")
         ft.commit()
         ft.addToBackStack("MovieDetail")

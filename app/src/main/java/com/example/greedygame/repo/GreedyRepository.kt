@@ -16,13 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class GreedyRepository@Inject constructor(private val networkApi: NetworkApi) {
 
-    /*suspend fun getMoviesRepsonse():MovieResponseData{
 
-        val response=networkApi.getMValue()
-        println("response ${response.movieResponse.size}")
-
-       return response
-    }*/
     fun getMoviesRepsonse() =
         Pager(
             config = PagingConfig(
@@ -44,6 +38,13 @@ class GreedyRepository@Inject constructor(private val networkApi: NetworkApi) {
         val response=networkApi.getReviewDetail(id)
         println("getMoviesReviewResponse ${response.result}")
 
+        return response
+    }
+    suspend fun getViewPagerData(id:Int?):MovieResponseData{
+
+        val response=networkApi.getMoviePagerValue(id)
+
+        println("getViewPagerData ${response.movieResponse.size}")
         return response
     }
 

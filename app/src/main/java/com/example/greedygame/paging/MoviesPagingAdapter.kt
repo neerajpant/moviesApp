@@ -55,7 +55,7 @@ class MoviesPagingAdapter(private val listener: OnItemClickListener) : PagingDat
                     .load(movie.getFullProfilePath())
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .error(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_error)
                     .into(movieImage)
 
                 textTitle.text = movie.title
