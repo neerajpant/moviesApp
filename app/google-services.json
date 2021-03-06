@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "96954041290",
+    "firebase_url": "https://image-search-app-8de87.firebaseio.com",
+    "project_id": "image-search-app-8de87",
+    "storage_bucket": "image-search-app-8de87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96954041290:android:9206bc4f6918fa248e4533",
+        "android_client_info": {
+          "package_name": "com.example.greedygame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "96954041290-1uh7q6i79mu3dgs2r6gc4594e0pa6ls2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twitter.tweets",
+            "certificate_hash": "d77c29ff4a46a15e02c4064f03d0861d1de82be1"
+          }
+        },
+        {
+          "client_id": "96954041290-58c8uci474njlj1hshdsmtb8j0609fpb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzD20amk0mxe_7_lzHKobG_GhZJmzXP00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "96954041290-58c8uci474njlj1hshdsmtb8j0609fpb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
