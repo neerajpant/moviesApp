@@ -7,37 +7,40 @@
     tools:context=".ui.movies.MoviesFragment"
     android:layout_height="match_parent">
 
-   <!-- <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager2"
         android:layout_width="0dp"
-        android:visibility="gone"
-        android:layout_height="0dp"
+        android:visibility="visible"
+        android:layout_height="130dp"
         android:layout_marginBottom="611dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/movie_list"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/layout_movies_list"
-         />
+
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:visibility="gone"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager2"
         android:layout_marginTop="18dp"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:id="@+id/movie_list"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:layout_height="0dp"
+        tools:listitem="@layout/layout_movies_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
